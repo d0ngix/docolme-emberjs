@@ -15,6 +15,21 @@ CREATE TABLE `docs` (
   `userId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `doc_histories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `doc_id` int(11) DEFAULT NULL,
+  `fileName` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `contentText` text COLLATE utf8_bin,
+  `userId` int(11) DEFAULT NULL,
+  `created` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ```
 ## Instruction
 1. Execute the SQL script above
