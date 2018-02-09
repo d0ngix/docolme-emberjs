@@ -16,7 +16,8 @@ CREATE TABLE `docs` (
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ## Instruction
-** Execute the SQL script above
-** Navigate to directoy where you have clone this repo. e.g.  c:\docolme-emberjs\
-** Issue this command to run the php server => php -S localhost:8080 -t public public/index.php
-** Open browser - http://localhost:8080/docs/index.html# 
+1. Execute the SQL script above
+2. Navigate to directoy where you have clone this repo. e.g.  c:\docolme-emberjs\
+3. Issue this command to run the php server => php -S localhost:8080 -t public public/index.php
+4. Open browser - http://localhost:8080/docs/index.html# 
+
