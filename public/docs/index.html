@@ -1,0 +1,158 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Docol Me</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  </head>
+  <body>
+
+    <!-- MAIN DOCS TEMPLATE -->
+    <script type="text/x-handlebars" data-template-name="docs">
+        <section id="docApp" class="">          
+            
+            <header id="" class="float-left">
+                <h1 style="padding-left:1%" >docolMe</h1>
+            </header>           
+            
+        </section>      
+
+        <!-- MAIN --> 
+        <div class="row ">
+            <!-- SIDE - DOC LIST --> 
+            <div class="col-md-3">
+                <section id="main" class="container">
+                    <!-- my docs -->
+                    <section>
+                        <h2>My Docs</h2>
+                        <ul id="doc-list">
+                          {{#each doc in model}}
+                          <li class="">
+                            <label>{{#link-to "doc" doc }}{{doc.fileName}}{{/link-to}}</label>
+                          </li>
+                          {{/each}}
+                          <li>
+                              {{#link-to "docs.create" type="button" class="btn btn-block btn-outline-primary"}} Create Document {{/link-to}}
+                          </li>
+                        </ul>
+                    </section>
+                    <hr>
+
+                </section>        
+            </div><!-- END OF SIDE - DOC LIST -->
+
+
+            <!-- CONTENT -->
+            <div class="col-md-9">
+
+                {{outlet}}
+                
+            </div>
+            <!-- END OF CONTENT -->            
+
+        </div>            
+        
+    </script>    
+
+    <!-- DOC.EDIT TEMPLATE -->
+    <script type="text/x-handlebars" data-template-name="docs/create">
+      {{partial 'doc/edit'}}
+    </script>    
+
+    <!-- DOC.EDIT TEMPLATE -->
+    <script type="text/x-handlebars" data-template-name="doc/edit">
+      <section class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                  {{input class="form-control" required=true maxlength=45 type="text" value=model.fileName id="" placeholder="Filename here..."}}
+                  {{completed}}
+                </div>
+                <div class="form-group">
+                    {{textarea class="form-control" required=true rows="20" value=model.contentText placeholder="Your content here..."}}
+                </div>                
+                {{#if model.id}}
+                  {{input type="hidden" value=model.userId }}
+                  <button {{action 'doneEditting'}} type="button" class="btn btn-outline-success ">Update</button>                  
+                  <button {{action 'cancel'}} type="button" class="btn btn-outline-secondary ">Cancel</button>
+                {{else}}
+                  <button {{action 'doneCreating'}} type="button" class="btn btn-outline-success ">Create</button>     
+                  {{#link-to 'docs' type="button" class="btn btn-outline-secondary "}}Cancel{{/link-to}}
+                {{/if}}
+                
+            </div>
+        </div>
+      </section>
+    </script>
+
+    <!-- DOCS.VIEW TEMPLATE -->
+    <script type="text/x-handlebars" data-template-name="doc">
+      <section class="container">
+        {{#if isEdit}}
+          {{partial 'doc/edit'}}                                
+        {{else}}        
+          <div class="row">
+              <div class="col-md-9">
+                  <h1>{{format-markdown fileName}}</h1>
+              </div>
+              <div class="col-md-3">
+                  <div class="float-right">
+                    <button type="button" class="btn btn-outline-warning " {{action "edit" }}>Edit</button>                                
+                    <button type="button" class="btn btn-outline-danger " {{action 'removeDocs'}}>Delete</button>                                
+                  </div>
+              </div>            
+          </div>
+          <div class="row">
+              <div class="col-md-12">
+                  <p>
+                      {{format-markdown model.contentText}}
+                  </p>
+              </div>
+          </div>     
+          <hr>
+          <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-info" role="alert">
+                    <small>Created by <strong>jmbrothers</strong> ( {{format-date model.created}} )</small>  <br>
+                    <small>Updated by <strong>johnsmith</strong> on 08-Feb-2018 03.59pm</small>  <br>
+                </div>            
+              </div>
+          </div>
+        {{/if}}
+      </section>       
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="docs/login">
+      <h1>login here </h1>
+    </script>
+
+
+
+
+ 
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    
+
+    <!-- default dependencies -->
+    <script src="js/libs/jquery-1.11.2.min.js"></script>
+    <script src="js/libs/handlebars-v1.3.0.js"></script>
+    <script src="js/libs/ember.js"></script>
+    <script src="js/libs/ember-data.js"></script>    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/showdown/0.3.1/showdown.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.1.0/moment.min.js"></script>    
+
+    <!-- application dependencies -->
+    <script src="js/application.js"></script>
+    <script src="js/router.js"></script>    
+    <script src="js/models/doc.js"></script>
+    <script src="js/models/user.js"></script>    
+    <script src="js/routes/docs_login_route.js"></script>    
+    <script src="js/routes/docs_doc_route.js"></script>   
+    <script src="js/controllers/doc_controller.js"></script>
+    <script src="js/controllers/docs_controller.js"></script>    
+
+  </body>
+</html>
