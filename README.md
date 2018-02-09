@@ -34,7 +34,10 @@ CREATE TABLE `doc_histories` (
 ## Instruction
 1. Execute the SQL script above
 2. Navigate to directoy where you have clone this repo. e.g.  c:\docolme-emberjs\
-3. Issue this command to run the php server => php -S localhost:8080 -t public public/index.php
+3. Run the PHP Server => 
+```
+php -S localhost:8080 -t public public/index.php
+```
 4. Open browser - http://localhost:8080/docs/index.html# 
 
 ## Rest APIs
