@@ -7,6 +7,7 @@ playing with ember + slimframework
 ## DB Schema
 ```
 CREATE DATABASE `docs` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+USER `docs`;
 CREATE TABLE `docs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fileName` varchar(45) COLLATE utf8_bin DEFAULT NULL,
@@ -32,12 +33,13 @@ CREATE TABLE `doc_histories` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 ```
 ## Instruction
-1. Execute the SQL script above
+1. Open your MySQL client and execute the SQL script above
 2. Navigate to directoy where you have clone this repo. e.g.  c:\docolme-emberjs\
 3. Run the PHP Server => 
 ```
 php -S localhost:8080 -t public public/index.php
 ```
+5. Change database connection credentials in c:\docolme-emberjs\src\dependencies.php
 4. Open browser - http://localhost:8080/docs/index.html# 
 
 ## Rest APIs
