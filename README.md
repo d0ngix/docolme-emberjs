@@ -3,6 +3,7 @@ playing with ember + slimframework
 
 # Requirements
 * PHP 7.x
+* MySQL 5.x
 
 ## DB Schema
 ```
