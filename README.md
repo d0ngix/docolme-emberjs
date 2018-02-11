@@ -41,6 +41,14 @@ CREATE TABLE `doc_histories` (
 php -S localhost:8080 -t public public/index.php
 ```
 5. Change database connection credentials in c:\docolme-emberjs\src\dependencies.php
+```
+    /** THIS SHOULD BE SET SOMEWHERE IN THE SERVER ENV VARIABLES - START */
+    $_ENV['DB_HOST'] = '127.0.0.1';
+    $_ENV['DB_NAME'] = 'docs';
+    $_ENV['DB_USER'] = 'root';
+    $_ENV['DB_PASS'] = 'PASSWORD-HERE-IF-ANY';
+    /** THIS SHOULD BE SET SOMEWHERE IN THE SERVER ENV VARIABLES - START */
+```
 4. Open browser - http://localhost:8080/docs/index.html#/users/login 
 
 ## Rest APIs
