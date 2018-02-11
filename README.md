@@ -1,5 +1,5 @@
 # docolme-emberjs
-playing with ember + slimframework
+playing with ember1.10 + slimframework 3
 
 # Requirements
 * PHP 7.x
@@ -41,8 +41,16 @@ CREATE TABLE `doc_histories` (
 php -S localhost:8080 -t public public/index.php
 ```
 5. Change database connection credentials in c:\docolme-emberjs\src\dependencies.php
-4. Open browser - http://localhost:8080/docs/index.html# 
+```
+    /** THIS SHOULD BE SET SOMEWHERE IN THE SERVER ENV VARIABLES - START */
+    $_ENV['DB_HOST'] = '127.0.0.1';
+    $_ENV['DB_NAME'] = 'docs';
+    $_ENV['DB_USER'] = 'root';
+    $_ENV['DB_PASS'] = 'PASSWORD-HERE-IF-ANY';
+    /** THIS SHOULD BE SET SOMEWHERE IN THE SERVER ENV VARIABLES - START */
+```
+4. Open browser - http://localhost:8080/docs/index.html#/users/login 
 
 ## Rest APIs
-*To import in Postman
+* To import in Postman
 https://www.getpostman.com/collections/1ba0d0de13c417a743c6
