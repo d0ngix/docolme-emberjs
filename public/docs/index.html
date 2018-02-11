@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -8,14 +8,16 @@
   </head>
   <body>
 
+
+
     <!-- MAIN DOCS TEMPLATE -->
     <script type="text/x-handlebars" data-template-name="docs">
-        <section id="docApp" class="">          
-            
-            <header id="" class="float-left">
-                <h1 style="padding-left:1%" >docolMe</h1>
-            </header>           
-            
+        <section id="" class="docApp">          
+
+          <header id="" class="float-left">
+              <h1 style="padding-left:1%" >docolMe</h1>
+          </header>                         
+
         </section>      
 
         <!-- MAIN --> 
@@ -67,7 +69,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                   {{input class="form-control" required=true maxlength=45 type="text" value=model.fileName id="" placeholder="Filename here..."}}
-                  {{completed}}
+                  
                 </div>
                 <div class="form-group">
                     {{textarea class="form-control" required=true rows="20" value=model.contentText placeholder="Your content here..."}}
@@ -123,8 +125,31 @@
       </section>       
     </script>
 
-    <script type="text/x-handlebars" data-template-name="docs/login">
-      <h1>login here </h1>
+    <!-- USER LOGIN -->
+    <script type="text/x-handlebars" data-template-name="users/login">
+      <form class="form-signin py-5">
+          
+          {{#if loginFailed}}
+          <div class="alert alert-danger">
+              <span>
+                Invalid username. Do you want to create an account with username <strong>{{username}}</strong>? - 
+                <button type="button" class="btn btn-outline-info " {{action 'create'}}>Yes</button>
+              </span>              
+          </div>
+          {{/if}}
+          
+          <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+          <label for="inputUsername" class="sr-only">Username</label>
+          {{input class="form-control" value=model.username placeholder="Username" required="" autofocus=""  }}
+          <label for="inputPassword" class="sr-only">Password disabled</label>
+          <input type="password" id="inputPassword" class="form-control" placeholder="Password disabled for this exercise" required="" disabled autocomplete>
+          <div class="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"> Remember me
+            </label>
+          </div>
+          <button class="btn btn-lg btn-primary btn-block" type="submit" {{action 'signin'}}>Sign in</button>
+        </form>
     </script>
 
 
@@ -149,10 +174,11 @@
     <script src="js/router.js"></script>    
     <script src="js/models/doc.js"></script>
     <script src="js/models/user.js"></script>    
-    <script src="js/routes/docs_login_route.js"></script>    
+    <script src="js/routes/docs_user_route.js"></script>    
     <script src="js/routes/docs_doc_route.js"></script>   
     <script src="js/controllers/doc_controller.js"></script>
     <script src="js/controllers/docs_controller.js"></script>    
+     
 
   </body>
 </html>

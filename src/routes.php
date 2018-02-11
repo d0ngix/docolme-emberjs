@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -16,8 +16,11 @@ use Slim\Http\Response;
 //API - user
 //require 'src/routes/user.php';
 
-//API - document
+//API - Todo
 require 'src/routes/todo.php';
 
-// //API - document
+//API - document
 require 'src/routes/docu.php';
+
+// //API - User
+require 'src/routes/user.php';

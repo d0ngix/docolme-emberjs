@@ -1,4 +1,4 @@
-Docs.DocsRoute = Ember.Route.extend({
+﻿Docs.DocsRoute = Ember.Route.extend({
     model: function() {
         var doc = this.store.find('docs');
         return doc;
@@ -12,15 +12,15 @@ Docs.DocRoute = Ember.Route.extend({
 });
 
 Docs.DocsCreateRoute = Ember.Route.extend({
-    // model: function() {
-    //     var doc = this.store.find('docs');
-    //     return doc;
-    // },
+    model: function() {
+        var doc = this.store.find('docs', {});
+        return doc;
+    },
     actions: {
         create: function() {
             //this.set('isEditing', true);
-            this.controller.set('model.fileName',"");
-            this.controller.set('model.contentText',"")
+            // this.controller.set('model.fileName',"");
+            // this.controller.set('model.contentText',"")
         },
 
         doneCreating: function() {
