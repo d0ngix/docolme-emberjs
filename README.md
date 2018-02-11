@@ -41,7 +41,7 @@ CREATE TABLE `doc_histories` (
 php -S localhost:8080 -t public public/index.php
 ```
 5. Change database connection credentials in c:\docolme-emberjs\src\dependencies.php
-4. Open browser - http://localhost:8080/docs/index.html# 
+4. Open browser - http://localhost:8080/docs/index.html#/users/login 
 
 ## Rest APIs
 *To import in Postman
