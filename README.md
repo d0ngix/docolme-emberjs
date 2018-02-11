@@ -52,5 +52,5 @@ php -S localhost:8080 -t public public/index.php
 4. Open browser - http://localhost:8080/docs/index.html#/users/login 
 
 ## Rest APIs
-*To import in Postman
+* To import in Postman
 https://www.getpostman.com/collections/1ba0d0de13c417a743c6
