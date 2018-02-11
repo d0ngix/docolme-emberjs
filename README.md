@@ -1,5 +1,5 @@
 # docolme-emberjs
-playing with ember + slimframework
+playing with ember1.10 + slimframework 3
 
 # Requirements
 * PHP 7.x
