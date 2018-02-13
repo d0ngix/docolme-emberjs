@@ -8,7 +8,7 @@ playing with ember1.10 + slimframework 3
 ## DB Schema
 ```
 CREATE DATABASE `docs` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
-USER `docs`;
+USE `docs`;
 CREATE TABLE `docs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `fileName` varchar(45) COLLATE utf8_bin DEFAULT NULL,
