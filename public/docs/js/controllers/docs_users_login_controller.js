@@ -1,4 +1,4 @@
-Docs.UsersLoginController = Ember.ObjectController.extend({
+﻿Docs.UsersLoginController = Ember.ObjectController.extend({
     loginFailed : false,
 
     actions : {
@@ -12,23 +12,25 @@ Docs.UsersLoginController = Ember.ObjectController.extend({
             }).then ( function (response) {
                 self.set('username', username);
                 document.location = "/docs/index.html#/"                
-                alert('success')
+                //alert('success')
                 
             }, function (controller) {
                 self.set('loginFailed',true);
                 self.set('username', username);
-                alert('failed')
+                //alert('failed')
             });
         },
         create : function (model) {
             // var username = this.controller.get('model.username');
+            var _this = this;
             username = this.get('username');
             if (!username.trim()) { return; }
 
             $.post("/users", {
                 username: username
             }).then ( function (response) {
-                document.location = "/docs/index.html#/"
+                //document.location = "/docs/index.html#/"
+                _this.transitionToRoute('docs');
             }, function () {
                 //this.set("loginFailed", true)
             });            
