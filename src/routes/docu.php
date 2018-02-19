@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 $app->get('/docus[/{id}]', function ( $request, $response, $args) {
     
@@ -7,21 +7,67 @@ $app->get('/docus[/{id}]', function ( $request, $response, $args) {
         try {
 
             if (isset($id)) {
-                $strSelectStmt = $this->db->select()->from('docs')->where('id','=',$id);
+                $strSelectStmt = $this->db->select()->from('docs')
+                                                    //->join('histories','histories.doc_id','=','docs.id')
+                                                    ->where('docs.id','=',$id);
                 $objDocument = $strSelectStmt->execute();
-                $arrResult = $objDocument->fetch();              
+                $arrResult = $objDocument->fetch();             
+
+                //retrieve histories
+                $strSelectStmt = $this->db->select()->from('histories')
+                                                    //->join('histories','histories.doc_id','=','docs.id')
+                                                    ->where('histories.doc_id','=',$id);
+                $objDocument = $strSelectStmt->execute();
+                $arrResultHistories = $objDocument->fetchAll();                             
+
+                if ( !empty($arrResultHistories) ) {
+                    $arrResult['histories'] = $arrResultHistories;
+                }
 
                 if (!$arrResult) $arrResult = new stdClass();
-                else {
-                    $arrResult['isCompleted'] = (boolean)$arrResult['isCompleted'];
-                }                      
 
-            }  else {
+            }  elseif ( !empty($request->getQueryParam('userId')) ) {
 
-                $strSelectStmt = $this->db->select()->from('docs');                
+                $strSelectStmt = $this->db->select()->from('docs')->where('userId','=',$request->getQueryParam('userId') );
                 $objDocument = $strSelectStmt->execute();
                 $arrResult = $objDocument->fetchAll();              
 
+                if (!$arrResult) $arrResult = new stdClass();
+
+            } else {
+
+                $strSelectStmt = $this->db->select()->from('docs');                
+                $objDocument = $strSelectStmt->execute();
+                $arrResultDoc = $objDocument->fetchAll();              
+
+                //get the histories
+                if (!empty($arrResultDoc)) {
+                    $arrDocId = [];
+                    array_walk($arrResultDoc, function ($v, $k) use (&$arrDocId) {
+                           $arrDocId[] = $v['id'];
+                    });                       
+    
+                    $strSelectStmt = $this->db->select()->from('histories')->whereIn('doc_id', $arrDocId);
+                    $objDocument = $strSelectStmt->execute();
+                    $arrResultHistory = $objDocument->fetchAll();                              
+
+                    $arrNewResultHistory = [];
+                    array_walk($arrResultHistory, function ($v, $k) use (&$arrNewResultHistory) {
+                           $arrNewResultHistory[$v[ 'doc_id']][] = $v;
+                    });                         
+    
+                    if (!empty ($arrResultDoc)) {
+                        $arrNewResultDoc = [];
+                        foreach($arrResultDoc as $v) {
+                            $v['histories'] = $arrNewResultHistory[$v['id']];
+                            $arrNewResultDoc[] = $v;
+                        }
+                        $arrResultDoc = $arrNewResultDoc;
+                    }                    
+                }
+
+                $arrResult = $arrResultDoc;
+                
             }
 
       
@@ -45,6 +91,12 @@ $app->post('/docus', function ( $request, $response, $args) {
     
     try {
 
+        //get the username
+        $strSelectStmt = $this->db->select(['username'])->from('users')->where('id','=',$data['docs']['userId']);
+        $objDocument = $strSelectStmt->execute();
+        $arrResultUser = $objDocument->fetch();            
+
+
         $arrResult = new stdClass();
 
         if ( empty($data['docs']['created']) ) {
@@ -53,8 +105,6 @@ $app->post('/docus', function ( $request, $response, $args) {
 
         $arrFields = array_keys($data['docs']);
         $arrValues = array_values($data['docs']);
-
-        
            
         // INSERT INTO users ( id , usr , pwd ) VALUES ( ? , ? , ? )
         $insertStatement = $this->db->insert( $arrFields )
@@ -64,7 +114,16 @@ $app->post('/docus', function ( $request, $response, $args) {
                 
         $strSelectStmt = $this->db->select()->from('docs')->where('id','=',$insertId);
         $objDocument = $strSelectStmt->execute();
-        $arrResult = $objDocument->fetch();              
+        $arrResult = $objDocument->fetch();         
+        
+        if ($arrResult) {
+            //saving to hitories
+            // INSERT INTO users ( id , usr , pwd ) VALUES ( ? , ? , ? )
+            $insertStatement = $this->db->insert( ['doc_id','fileName','contentText','username','created','action'] )
+                                        ->into('histories')
+                                        ->values([$insertId,$data['docs']['fileName'],$data['docs']['contentText'],$arrResultUser['username'], $data['docs']['created'],'Created' ]);
+            $insertId = $insertStatement->execute(true);        
+        }
 
         if (!$arrResult) $arrResult = new stdClass();
 
@@ -100,6 +159,20 @@ $app->put('/docus/{id}', function ( $request, $response, $args) {
         $arrResult = $updateStatement->execute(true);
 
         $data['docs']['id'] = $id;               
+
+        if ($arrResult) {
+            //get the username
+            $strSelectStmt = $this->db->select(['username'])->from('users')->where('id','=',$data['docs']['userId']);
+            $objDocument = $strSelectStmt->execute();
+            $arrResultUser = $objDocument->fetch();             
+            //saving to hitories
+            // INSERT INTO users ( id , usr , pwd ) VALUES ( ? , ? , ? )
+            //var_dump($data);die;
+            $insertStatement = $this->db->insert( ['doc_id','fileName','contentText','username','created','action'] )
+                                        ->into('histories')
+                                        ->values([$id,$data['docs']['fileName'],$data['docs']['contentText'],$arrResultUser['username'], date('Y-m-d H:i:s'), 'Updated' ]);
+            $insertId = $insertStatement->execute(true);                
+        }
 
         return $response->withJson( ['docs' => $data['docs']] , 200);		
         

@@ -1,4 +1,4 @@
-window.Docs = Ember.Application.create();
+﻿window.Docs = Ember.Application.create();
 
 // Docs.ApplicationAdapter = DS.FixtureAdapter.extend();
 
@@ -6,12 +6,12 @@ var inflector = Ember.Inflector.inflector;
 inflector.irregular('docs', 'docus');
 
 Docs.ApplicationAdapter = DS.RESTAdapter.extend({
-    host: 'http://localhost:8080'
+    host: 'http://localhost:8888/docolme-emberjs/public'
 });
 
 Ember.Handlebars.helper('format-date', function (date) {
-    // return moment(date).fromNow();
-    return date;
+    return moment(date).fromNow();
+    //return date;
 });
 
 var showdown = new Showdown.converter();

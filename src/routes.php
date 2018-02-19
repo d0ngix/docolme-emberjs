@@ -13,14 +13,11 @@ use Slim\Http\Response;
 //     return $this->renderer->render($response, 'index.phtml', $args);
 // });
 
-//API - user
-//require 'src/routes/user.php';
-
 //API - Todo
-require 'src/routes/todo.php';
+//require 'src/routes/todo.php';
 
 //API - document
-require 'src/routes/docu.php';
+require '../src/routes/docu.php';
 
 // //API - User
-require 'src/routes/user.php';
+require '../src/routes/user.php';

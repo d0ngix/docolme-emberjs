@@ -1,5 +1,8 @@
-Docs.DocsController = Ember.ArrayController.extend({
+﻿Docs.DocsController = Ember.ArrayController.extend({
     isEdit: false,    
+
+    username: window.sessionStorage.getItem("username"),
+    uid: window.sessionStorage.getItem('uid'),
     
     actions : {
         // createDoc : function () {
@@ -13,7 +16,7 @@ Docs.DocsController = Ember.ArrayController.extend({
             var content = this.get('content');
             if (!content.trim()) { return; }
 
-            var userId = this.get('userId');
+            var userId = uid;
 
             var doc = this.store.createRecord('doc', {
                 fileName: fileName,

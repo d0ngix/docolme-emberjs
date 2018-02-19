@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 $app->post('/users/login', function ( $request, $response, $args) {
     
@@ -17,9 +17,12 @@ $app->post('/users/login', function ( $request, $response, $args) {
         $objStmt = $selectStmt->execute();
         $arrResult = $objStmt->fetch();
 
+        
+
         if (!$arrResult) {
             $arrResult = new stdClass();
             $httpCode = 404;
+            //var_dump($arrResult, $httpCode);die;
         } 
 
         return $response->withJson( ['users' => $arrResult] , $httpCode);		

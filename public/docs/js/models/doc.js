@@ -1,8 +1,10 @@
-Docs.Docs = DS.Model.extend({
+﻿Docs.Docs = DS.Model.extend({
     fileName : DS.attr('string'),
     contentText : DS.attr('string'),
     created : DS.attr('date'),
-    userId : DS.attr('number')
+    userId : DS.attr('number'),
+    histories : DS.attr()
+    //histories : DS.hasMany('history', { async: true })
 });
 
 // Docs.Doc.FIXTURES = [

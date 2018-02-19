@@ -1,4 +1,4 @@
-Docs.DocController = Ember.ObjectController.extend({
+﻿Docs.DocController = Ember.ObjectController.extend({
 
     isEdit: false,
 
@@ -9,6 +9,7 @@ Docs.DocController = Ember.ObjectController.extend({
         doneEditting: function() {
             this.set('isEdit', false);
             this.get('model').save();
+            this.transitionTo('docs');
         },
         cancel: function() {
             this.set('isEdit', false);            

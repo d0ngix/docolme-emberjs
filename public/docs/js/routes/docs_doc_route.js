@@ -1,14 +1,35 @@
 ﻿Docs.DocsRoute = Ember.Route.extend({
     model: function() {
-        var doc = this.store.find('docs');
-        return doc;
-      }
+        return this.store.find('docs');
+    }
 });
 
 Docs.DocRoute = Ember.Route.extend({
     model: function(params) {
-        return this.store.find( 'docs', params.doc_id);
-      }    
+        let doc = this.store.find( 'docs', params.doc_id);
+        return doc;
+    },
+    // renderTemplate: function () {
+    //     this.render('doc');
+    // }        
+});
+
+Docs.MineRoute = Ember.Route.extend({
+    model: function() {
+        var docs = this.store.find('docs', {userId: window.sessionStorage.getItem("uid")});
+        //console.log(docs);
+        return docs;
+    },
+    // renderTemplate: function () {
+    //     this.render('docs');
+    // }
+});
+
+Docs.DocsMyDocsRoute = Ember.Route.extend({
+    model: function() {
+        var docs = this.store.find('docs');
+        return docs;
+    }
 });
 
 Docs.DocsCreateRoute = Ember.Route.extend({
@@ -52,3 +73,12 @@ Docs.DocsCreateRoute = Ember.Route.extend({
     },    
 
 });
+
+
+// Docs.DocsAlldocsRoute = Ember.Route.extend({
+    // renderTemplate: function() {
+    //     // this.render();
+    //     // this.render({ outlet: 'sidebar' });
+        
+//       }
+// });
